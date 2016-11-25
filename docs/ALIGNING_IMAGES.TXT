@@ -1,0 +1,21 @@
+ALIGNING_IMAGES.TXT
+--------------------
+
+	This is the most important part of the code as 
+	aligning images that are mosaiced, rotated or offset
+	in some way, if done incorrectly will result in crazy images
+
+	This is mostly automated, however will often require some
+	tweaking from the user in the case of very offset images.
+	If the overlap between images is very small this can often
+	struggle.
+	
+	I strongly suggest the user reads
+	The attached Aligning_for_ACS.pdf
+	http://stsdas.stsci.edu/stsci_python_sphinxdocs_2.13/drizzlepac/tweakreg.html
+	http://www.stsci.edu/hst/HST_overview/drizzlepac/resources/instructional_movies/
+
+		
+	
+	
+	

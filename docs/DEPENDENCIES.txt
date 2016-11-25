@@ -1,0 +1,31 @@
+This file contains all the dependencies of the hst reduction code
+These must be downloaded and put in the path to be found.
+
+Contents:
+   1. Python dependencies
+   2. Required external binaries
+
+
+1. Python Dependencies
+-----------------------
+1.  Numpy
+2.  Pyfits
+3.  Stsci tools (this can be easily installed via
+    >> easy_install install pip #(if you dont have pip)
+    >> pip install stsci.distutils
+    >> pip install stscipython
+4.  csv
+5.  argparse
+6.  glob
+7.  pysex (wrapped up here as i have 
+   	 adapted it and made it better)
+8.  ipdb (for bug fixing)
+9.  os
+10. sys
+
+2. External Dependencies
+------------------------
+1. Massey et al cte correction library
+   https://www.astro.uni-bonn.de/download/software/cte-tool/
+   Or use the old idl code in bin wrapped up here.
+2. SExtractor (which is required by pysex)

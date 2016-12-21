@@ -52,7 +52,16 @@ def main( cluster, single=False ):
              WARNING: If you are drizzling together a lot of images
              this will produce a lot of data (Each drz image is ~300mb)
 
+    NOTE : PLEASE ENSURE YOU SET AN ENVIRONMENT VARIABLE IN YOU LOGIN
+         SCRIPT E.G. .BASH_LOGIN WITH THE VARIANBLE TO THIS DIRECTORY
+
+    e.g. for bash
+    export HST_REDUCTION = path/to/root_dir 
     '''
+
+    #Test for the environment variable
+    if 'HST_REDUCTION' not in os.environ.keys():
+        raise ValueError("HST_REDUCTION KEYWORD NOT FOUND IN ENVIRMENT VARIABLE PLEASE ADD")
     
     #1. Run the cte correction on the data
     cte.cte_correct( )
@@ -73,6 +82,8 @@ def main( cluster, single=False ):
     for iFilter in hst_filters:
         fileobj = open( iFilter+'.lis', 'rb')
         flts = [ iFlt[0:13]+'_flt.fits' for iFlt in fileobj ]
-        drizzle.drizzle( 'USING FILES', cluster, iFilter, files=flts,
-                         jref_path='./', single=single )
+        drizzle.drizzle( 'USING FILES', cluster, iFilter,
+                         files=flts,
+                         jref_path='./', single=single,
+                         search_rad=1.0, thresh=1.0 )
         

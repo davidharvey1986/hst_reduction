@@ -39,6 +39,10 @@ import numpy as np
 import glob as glob
 import os as os
 import ipdb as pdb
+import sys
+import argparse as ap
+
+
 
 def main( cluster, single=False ):
     '''
@@ -58,7 +62,9 @@ def main( cluster, single=False ):
     e.g. for bash
     export HST_REDUCTION = path/to/root_dir 
     '''
+    sys.stdout = Logger("hst_reduction.log")
 
+    
     #Test for the environment variable
     if 'HST_REDUCTION' not in os.environ.keys():
         raise ValueError("HST_REDUCTION KEYWORD NOT FOUND IN ENVIRMENT VARIABLE PLEASE ADD")
@@ -86,4 +92,22 @@ def main( cluster, single=False ):
                          files=flts,
                          jref_path='./', single=single,
                          search_rad=1.0, thresh=1.0 )
-        
+
+
+
+
+    
+class Logger(object):
+    def __init__(self, filename="Default.log"):
+        self.terminal = sys.stdout
+        os.system('rm -fr '+filename)
+        self.log = open(filename, "a")
+
+    def write(self, message):
+        self.terminal.write(message)
+        self.log.write(message)
+
+
+if __name__ == '__main__':
+    method_name, cluster = sys.argv[0], sys.argv[1]
+    main(cluster)

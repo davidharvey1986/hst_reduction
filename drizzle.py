@@ -22,7 +22,6 @@ from drizzlepac import tweakback
 from subprocess import call
 import tweakreg_sextract as tweaksex
 
-
 def drizzle(input_filename, cluster, filter, \
             combine_type='iminmed', \
             wcs_update=True, individual=True, \
@@ -76,6 +75,7 @@ def drizzle(input_filename, cluster, filter, \
                              to align objects (keyword in TweakReg)
       - threshold : the threshold in signal to noise for sources when alligning exposures (keyword in TweakReg)
       - files : a python list of files to be drizzled together, if none it will use the input_filename
+
       
     UPDATE : 15/01/2014 : NEW PIPELINE
              07/10/2014 : V2 : CHANGE FROM OBSERVATION DATE TO OBSERVATION RUN
@@ -89,6 +89,8 @@ def drizzle(input_filename, cluster, filter, \
         versions of pyfits, its own and the one that may exist on your compiuter.
     
     '''
+
+
 
     if files is None:
         files = glob.glob( input_filename )

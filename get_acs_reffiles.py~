@@ -10,8 +10,7 @@ import pyfits as py
 import ipdb as pdb
 
 def get_acs_reffiles( cte_file, ext='all',
-                    acs_reffiles_location = 'ftp://ftp.stsci.edu/cdbs/jref/',
-                      add_jref=True ):
+                    acs_reffiles_location = 'ftp://ftp.stsci.edu/cdbs/jref/' ):
     '''
     For the input acs_file i will look in the header and check
     for the required calibration files
@@ -55,8 +54,7 @@ def get_acs_reffiles( cte_file, ext='all',
                         os.system("curl -O "+acs_reffiles_location+"/"+get_file)
                         os.system("mv "+get_file+" "+save_file)
                     else:
-                        if add_jref:
-                            os.system("mv "+get_file+" "+save_file)
+                        os.system("mv "+get_file+" "+save_file)
 
                 
 

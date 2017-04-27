@@ -29,7 +29,7 @@ def cte_correct( files='j*q_raw.fits', idl=True ):
         idl_command = os.environ['HST_REDUCTION']+"/bin/cte_correct_vidl.sh"
         
         for iRaw_File in glob.glob(files):
-            gar.get_acs_reffiles( iRaw_File, ext='bia' )
+            gar.get_acs_reffiles( iRaw_File, ext='bia', add_jref=False)
             cte_file = iRaw_File[:-9]+"_cte.fits"
             out_file = iRaw_File[:-9]+"_cte_raw.fits"
             if not os.path.isfile( out_file ):

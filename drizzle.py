@@ -27,7 +27,7 @@ def drizzle(input_filename, cluster, filter, \
             wcs_update=True, individual=True, \
             single=False, outputfilename=None,
             jref_path='../', search_rad=1.0, thresh=1.0,
-            files=None):
+            files=None, drizzle_kernel='square', pixel_scale=0.03):
 
     '''
     PURPOSE : TO STACK TOGETHER IMAGES FROM DIFFERENT EPOCHS
@@ -150,9 +150,10 @@ def drizzle(input_filename, cluster, filter, \
     astrodrizzle.AstroDrizzle( input_filename, \
                                 output=str(outputfilename), \
                                 final_wcs=True, \
-                                final_scale=0.03, \
+                                final_scale=pixel_scale, \
                                 final_pixfrac=0.8, \
-                                combine_type=combine_type)
+                                combine_type=combine_type, \
+                                final_kernel=drizzle_kernel)
                                 
     
 

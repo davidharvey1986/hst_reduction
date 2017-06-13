@@ -6,30 +6,31 @@ Author : David Harvey
 Date : 13/11/2011
 
 """
-import copy
+import ipdb as pdb
 import sys
 import argparse as ap
-import stwcs
 from stwcs import updatewcs
-import pywcs
 import argparse
 import numpy as np
 import csv as c
 import os
 import glob
-import image_date as im
 import drizzlepac 
 from  drizzlepac import astrodrizzle
 from drizzlepac import tweakreg
 from drizzlepac import tweakback
 from subprocess import call
-import pysex as sex
+import tweakreg_sextract as tweaksex
 
-
-def drizzle(input_filename, cluster, filter):
+def drizzle(input_filename, cluster, filter, \
+            combine_type='iminmed', \
+            wcs_update=True, individual=True, \
+            single=False, outputfilename=None,
+            jref_path='../', search_rad=1.0, thresh=1.0,
+            files=None, drizzle_kernel='square', pixel_scale=0.03):
 
     '''
-    PURPOSE : TO BRING TOGETHER IMAGES FROM DIFFERENT EPOCHS
+    PURPOSE : TO STACK TOGETHER IMAGES FROM DIFFERENT EPOCHS
               AND DRIZZLE THEM TOGETHER
 
 
@@ -43,20 +44,12 @@ def drizzle(input_filename, cluster, filter):
     METHOD :
 
     1. FIRST IT NEEDS TO UPDATE THE WCS OF EACH INDIVIDUAL
-       EXPOSURE, UNFORTUANTELY THE UPDATEWCS USED FOR THIS
-       WILL DEPEND ON THE DATE OF THE OBSERVATIOB
-       IT WILL ATTEMPT TO USE THE ORIGINAL VERSION ON THE LINUX
-       SYSTEM, IF THIS FAILS IT WILL USE THE NEWER VERSION OF
-       UPDATEWCS
-
-       THE ERRORS ARE ASSOCIATED WITH THE ARRAY IS TOO DEEP
-
+       EXPOSURE
 
     2. ONCE IT HAS DONE THIS, IT WILL GET THE DATES OF ALL THE
        OBSERVATIONS AND DRIZZLE TOGETHER THOSE THAT ARE FROM THE
        EXACT SAME DATE
        ONCE IT HAS DONE THIS IT WILL TWEAK THESE DRIZZLED IMAGES
-
 
     3. THEN USING THE TWEAK OPERATION IN THE HEADER OF THESE
        DRIZZLED FILES IT WILL TWEAKBACK TO THE FLT IMAGES
@@ -64,52 +57,110 @@ def drizzle(input_filename, cluster, filter):
     4. THEN IT WILL DRIZZLED TOGETHER ALL THE FLT IMAGES
 
 
+    ARGUMENT:
+      - input_filename :  A STRING CONTAINING THE FILES TO DRIZZLE, ALMOST
+                          ALWAYS '*FLT.FITS' (if want a list use 'file')
+      - cluster, filter : STRINGS CONTAINIGN THE CLUSTER NAME AND FILTER TO DRIZZLE
 
+    KEYWORDS :
+    
+      - combine_type : HOW IMAGES ARE COMBINED DEFAULT IS 'iminmed', \
+      - wcs_update : DO I WANT TO UPDATE THE WCS HEADERS? DEFAULT=True
+      - individual : DO I WANT TO DRIZZLE EACH OBS RUN INDIVUALLY AND TWEAKBACK DEFAILT =True, \
+      - single : DO I WANT TO DRIZZLE EACH IMAGE ONTO ITS ON FRAME FOR PURPOSE OF PSF EST DEF=False):
+      - outputfilename : the string of the output file. If not given the name defauilts to
+                         CLUSTER_FILTER_drz_sci.fits
+      - jref_path : string, the location of the calibration files for distortion etc
+      - search_rad : float : the size in pixels of tweakreg when it searches for overlapping sources
+                             to align objects (keyword in TweakReg)
+      - threshold : the threshold in signal to noise for sources when alligning exposures (keyword in TweakReg)
+      - files : a python list of files to be drizzled together, if none it will use the input_filename
 
+      
     UPDATE : 15/01/2014 : NEW PIPELINE
              07/10/2014 : V2 : CHANGE FROM OBSERVATION DATE TO OBSERVATION RUN
+             25/11/2016 : V3 : Updatewcs just the singluar version now, which should be okay
+                               with all data, but a note of worry.
+
+
+    NOTE:
+        IF UPDATEWCS fails with 'HDUList has attribute' (or something liek this)
+        then the bug lies within STSCI, from the fact that it imports two different
+        versions of pyfits, its own and the one that may exist on your compiuter.
     
     '''
+
+
+
+    if files is None:
+        files = glob.glob( input_filename )
+    else:
+        input_filename = ','.join(files)
+        
+    if single:
+        call(["mkdir", "singles"])
+        
+        for iflt in files:
+            iDrz = iflt.split("_")[0]
+            drizzle( iflt, iDrz, filter, \
+                     outputfilename=iDrz,
+                     jref_path=jref_path)
+            call(["mv", iDrz+"_drz_sci.fits","singles"])
+
+            
+   
+    if len(files) == 1:
+        combine_type='minimum'
+        
     #OUTPUTFILENAME
-    outputfilename = cluster+'_'+filter
+    if outputfilename is None:
+        outputfilename = cluster+'_'+filter
+        
+    
     #SETUP ENVIRONMENT VARIABLE
-    os.environ['jref'] = '../'
+    os.environ['jref'] = jref_path
     os.environ['iref'] = '../'
+
 
 
     #1. FIRST UPDATE THE WCS
     #------------------------------------------
-    update_wcs( input_filename )
+    if wcs_update:
+        update_wcs( input_filename, files=files )
     
     
     #2. NOW GET THE OBSERVATION DATES AND DRIZZLE THEM TOGETHER
     #--------------------------------------------------------------------------
     print 'Getting dates of the Observations'
     #obsDates, fltList = date_list( input_filename)
-    obsRun, fltList = obs_name( input_filename )
+    obsRun, fltList = obs_name( input_filename, files=files )
 
        
     uniqueObs = np.unique(np.array(obsRun))
 
-
-    if len(uniqueObs) > 1:
-        drizzle_fields( obsRun, fltList, cluster, filter )
+    
+    if len(uniqueObs) > 1 and individual is True:
+        drizzle_fields( obsRun, fltList, cluster, filter,
+                        thresh=thresh, search_rad=search_rad )
     else:
         print 'All observations taken on the same run'
     #4. NOW DRIZZLE TOGETHER ALL THE TWEAK FLT IMAGES
-    
+
+
     astrodrizzle.AstroDrizzle( input_filename, \
                                 output=str(outputfilename), \
-                                median='No',\
                                 final_wcs=True, \
-                                final_scale=0.03, \
+                                final_scale=pixel_scale, \
                                 final_pixfrac=0.8, \
-                                combine_type='minimum')
+                                combine_type=combine_type, \
+                                final_kernel=drizzle_kernel)
+                                
     
 
 
   
-
+    if single:
+        call(["mv", "singles/*", "."])
     '''
     FOR REFERENCE:
 
@@ -137,7 +188,7 @@ def drizzle(input_filename, cluster, filter):
     final_refimage='ref_image_drz_sci.fits'
     '''
     
-def update_wcs( input_filename):
+def update_wcs( input_filename, files=None):
     '''
     PURPOSE : TO UPDATE THE WCS USING THE DRIZZLEPAC
 
@@ -149,34 +200,17 @@ def update_wcs( input_filename):
     #if new ones use a different module.
             
     #loop over inidivudla flt not *flt.fits
-    
-    from stwcs import updatewcs
-    for iFile in glob.glob(input_filename):
-        try:
-            updatewcs.updatewcs(iFile)
-        except Exception,e:
-            print e
-            print 'NEW IMAGE CHANGING TO NEW PIPELINE', iFile
-            sys.path.insert(1,'/Users/DavidHarvey/Library/Code/python/pywcs-1.10.3.dev3657-py2.7-linux-x86_64.egg')
-            sys.path.insert(1,'/Users/DavidHarvey/Library/Code/python/stwcs-1.1.1.dev26749-py2.7.egg')
-            modules=copy.copy(sys.modules)
-            for iModule in modules:
-                if iModule.startswith('stwcs'):
-                    del sys.modules[iModule]
-                
-            import stwcs
-            from stwcs import updatewcs
-            
-            import pywcs
-            print iFile
-            updatewcs.updatewcs(iFile)
-    
-    import drizzlepac 
-    from  drizzlepac import astrodrizzle
-    from drizzlepac import tweakreg
 
 
-def drizzle_fields( obsDates, fltList, cluster, filter):
+    if files is None:
+        files = glob.glob(input_filename)
+    
+    for iFile in files:
+        updatewcs.updatewcs(iFile)
+
+
+
+def drizzle_fields( obsDates, fltList, cluster, filter, search_rad=1, thresh=1):
     '''
     PURPOSE : IF THERE ARE OBSERVATIONS FROM DIFFERENT DATES / OBSRUNS
     THEN DRIZZLE THE DATES THAT ARE THE SAME TOGETHER
@@ -186,7 +220,8 @@ def drizzle_fields( obsDates, fltList, cluster, filter):
     INPUTS : OBSDATES : CAN BE ANY UNIQUE IDENTIFIER TO NAME OF THE RUN
                         OR DATE
     
-    
+    thresh=1.0
+    search_rad=1.0 #Often this parameter is too big if the images hardly overlap. Keep at 1 if limited sources
     '''
     outputfilename = cluster+'_'+filter
 
@@ -210,7 +245,8 @@ def drizzle_fields( obsDates, fltList, cluster, filter):
                                         final_wcs=True, \
                                         final_scale=0.03, \
                                         final_pixfrac=0.8, \
-                                        combine_type='imedian')
+                                        combine_type='iminmed')
+                                        
             call(["cp",str(iDate)+"_drz_sci.fits","keep"])
     
         else:
@@ -235,17 +271,17 @@ def drizzle_fields( obsDates, fltList, cluster, filter):
 
                     
        
-    drzString= ",".join(drzList)
     
 
     #Run sextractor on the images
-    call(["tweak_sextract.sh",str(cluster),str(filter)])
-    refDate=obsDates[0]#
-    refimage=drzList[0]#
+    #tweaksex.tweakreg_sextract(drzList,'catfile')
+    refDate=obsDates[1]#
+    refimage=drzList[1]#
+    drzString= ",".join(drzList)
 
-    thresh=1.0
-    search_rad=4.0 #Often this parameter is too big if the images hardly overlap. Keep at 1 if limited sources
-    ref_sex( refimage )
+
+    
+    tweaksex.ref_sex( refimage )
     
     tweakreg.TweakReg(drzString, \
                         residplot='both', \
@@ -253,7 +289,7 @@ def drizzle_fields( obsDates, fltList, cluster, filter):
                         threshold=np.float(thresh), \
                         searchrad=np.float(search_rad), \
                         fitgeometry='rscale', updatehdr='True', \
-                        refimage=refimage, \
+                        refimage=refimage, 
                         catfile='catfile', \
                         xcol=1, ycol=2, fluxcol=3, \
                         minobj=2, \
@@ -268,30 +304,9 @@ def drizzle_fields( obsDates, fltList, cluster, filter):
         tweakback.tweakback( str(iDate)+'_drz_sci.fits', \
                                 input=tweakString )
 
-            
-            
-            
-            
-def date_list(input_filename):
-    '''
-    PURPOSE : GET A LIST OF THE IMAGE DATES
-
-    OUTPUTS : A LIST OF DATES OF IMAGES
-              A LIST OF CORRESPONDING FLT IMAGES
-    '''
-    obsDates = []
-    fltList = []
-    for infile in glob.glob( os.path.join('',str(input_filename) ) ):
-        #print "The date of" + infile + " is "+  im.image_date( infile )
-        fltList.append(infile)
-        obsDates.append(im.image_date( infile ))
 
 
-
-    return obsDates, fltList
-
-
-def obs_name( input_filename ):
+def obs_name( input_filename, files=None ):
     '''
     PURPOSE : TO GET THE OBSERVATION RUN NAME (DATA SET NAME)
              WHICH IS THE FIRST 6 CHARACATERS
@@ -306,7 +321,10 @@ def obs_name( input_filename ):
     fltList = []
     obsRun = []
 
-    for infile in glob.glob( os.path.join('',str(input_filename) ) ):
+    if files is None:
+        files = glob.glob( os.path.join('',str(input_filename) ) )
+        
+    for infile in files:
         #print "The date of" + infile + " is "+  im.image_date( infile )
         fltList.append( infile ) 
         obsRun.append( infile[:6] )
@@ -314,34 +332,22 @@ def obs_name( input_filename ):
 
     return obsRun, fltList
 
-import ipdb as pdb
 
-def ref_sex( refimage ):
-    '''
-    PURPOSE : TO SEXTRACT THE COORDINATES OF THE OBJECTS IN
-              FOR THE REFERENCE CATALOGUE
 
-    '''
-
-    conf_file = '/Users/DavidHarvey/Library/Code/IDL/rrg/code/shape/sex_files/tweak_wcs.sex'
-    param_file =  '/Users/DavidHarvey/Library/Code/IDL/rrg/code/shape/sex_files/tweak_wcs.param'
-    sexCat = sex.run(   refimage, conf_file=conf_file, param_file=param_file, \
-                        conf_args={'CATALOG_NAME':'reference.cat'})
     
 
 if __name__ == '__main__':
-    parser = ap.ArgumentParser(description='Multidrizzle the file')
-    parser.add_argument('inputfile',type=str,nargs=1,\
-                            help='Multidrizzle ds9 the file')
-    parser.add_argument('cluster',type=str,nargs=1,\
-                            help='Multidrizzle ds9 the file')
-   
-    parser.add_argument('filter',type=str,nargs=1,\
-                            help='Multidrizzle ds9 the file')
-    args = parser.parse_args()
     
-    input_filename=args.inputfile[0]
-    cluster=args.cluster[0]
-    filter=args.filter[0]
+    method_name, arg_strs = sys.argv[0], sys.argv[1:]
+    
+    input_filename = arg_strs[0]
+    cluster = arg_strs[1]
+    filter = arg_strs[2]
+    kwargs={}
+    for arg in arg_strs:
+        if arg.count('=') == 1:
+            key, value = arg.split('=')
+            kwargs[ key ]  = value
 
-    drizzle(input_filename, cluster, filter)
+    
+    drizzle(input_filename, cluster, filter, single=True, **kwargs)

@@ -41,10 +41,10 @@ import os as os
 import ipdb as pdb
 import sys
 import argparse as ap
+import pyfits as fits
 
 
-
-def main( cluster, single=False ):
+def main( cluster, single=False, drizzle_kernel='square' ):
     '''
     The main function to do what is explained in docs/README
 
@@ -64,8 +64,13 @@ def main( cluster, single=False ):
     '''
     sys.stdout = Logger("hst_reduction.log")
 
-    
+    if fits.__version__ != '3.1.6':
+        raise ImportError('Not the correct version of pyfits, needs 3.1.6')
+    if np.__version__ != '1.11.0':
+        raise ImportError('Not the correct version of numpy, needs 1.11.0')
+
     #Test for the environment variable
+
     if 'HST_REDUCTION' not in os.environ.keys():
         raise ValueError("HST_REDUCTION KEYWORD NOT FOUND IN ENVIRMENT VARIABLE PLEASE ADD")
     
@@ -91,7 +96,8 @@ def main( cluster, single=False ):
         drizzle.drizzle( 'USING FILES', cluster, iFilter,
                          files=flts,
                          jref_path='./', single=single,
-                         search_rad=1.0, thresh=1.0 )
+                         search_rad=1.0, thresh=1.0,
+                         drizzle_kernel=drizzle_kernel)
 
 
 

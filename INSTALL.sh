@@ -1,6 +1,8 @@
 #!/bin/bash
+#First we need virtualenv
 CODE_DIR=${PWD}
 virtual_env=${1}
+pip install virtualenv
 if [ -d "${virtual_env}" ]; then
    echo ${virtual_env}' directory already exists, do not clobber'
    exit

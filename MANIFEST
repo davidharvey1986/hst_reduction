@@ -1,3 +1,4 @@
+INSTALL.sh
 INSTALL
 src/pysex.py
 src/__init__.py
@@ -47,3 +48,7 @@ src/calacs/wf3ccd.e
 src/calacs/wf3ir.e
 src/calacs/wf3rej.e
 src/calacs/wf3sum.e
+docs/ALIGNING_IMAGES.TXT
+docs/Aligning_for_ACS.pdf
+docs/DEPENDENCIES.txt
+docs/DEPENDENCIES.txt~

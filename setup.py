@@ -7,8 +7,7 @@ from setuptools.command.install import install
 import numpy
 
 long_description = """\
-This module uses the RRG method to measure the shapes of galaxies
-in Hubble Space Telescope data
+This module uses the HST method to  reduce images from the Hubble Space Telescope
 """
 #python setup.py register -r pypi
 #sudo python setup.py sdist upload -r pypi
@@ -20,10 +19,13 @@ INCDIRS=['.']
 
 packages = ['pyHST','asciidata']
 package_dir = {'pyHST':'./src',
-               'asciidata':'./lib/asciidata'}
+               'asciidata':'./lib/asciidata',
+                   'docs':'./docs'}
 package_data = {'pyHST': ['tweak_sex/*','bin/*',\
                               'stsci_patches/*',\
-                              'calacs/*']}
+                              'calacs/*',\
+                              '../docs/*', \
+                              '../INSTALL*']}
 
 
 setup   (       name            = "pyHST",

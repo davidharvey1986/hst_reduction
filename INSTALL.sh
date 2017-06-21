@@ -18,7 +18,6 @@ which python
 ./pip install stsci.distutils
 ./pip install stscipython
 ./pip install pyfits==3.1.6
-cp -fr /Users/DavidHarvey/Library/Code/python/hst_reduction/dist/pyHST-0.0.1.tar.gz ${ROOT_DIR}
 cd ${ROOT_DIR}
 tar -xvf pyHST-0.0.1.tar.gz
 cd pyHST-0.0.1

@@ -1,10 +1,15 @@
 #!/bin/bash
+CODE_DIR=${PWD}
 virtual_env=${1}
 if [ -d "${virtual_env}" ]; then
    echo ${virtual_env}' directory already exists, do not clobber'
    exit
 fi
 virtualenv -p /usr/bin/python2.7 ${virtual_env}
+if [ ! -d "${virtual_env}" ]; then
+   echo ${virtual_env}' didnt creat'
+   exit
+fi
 cd ${virtual_env}
 ROOT_DIR=${PWD}
 cd ${ROOT_DIR}/bin
@@ -19,8 +24,9 @@ which python
 ./pip install stscipython
 ./pip install pyfits==3.1.6
 cd ${ROOT_DIR}
-tar -xvf pyHST-0.0.1.tar.gz
-cd pyHST-0.0.1
+mkdir pyHST
+cp -fr ${CODE_DIR}/* pyHST
+cd pyHST
 python setup.py install
 cd ${ROOT_DIR}
 cp ${ROOT_DIR}/lib/python2.7/site-packages/pyHST-0.0.1-py2.7.egg/pyHST/stsci_patches/fileutil.py ${ROOT_DIR}/lib/python2.7/site-packages/stsci/tools/

@@ -6,7 +6,6 @@ Author : David Harvey
 Date : 13/11/2011
 
 """
-import ipdb as pdb
 import sys
 import argparse as ap
 from stwcs import updatewcs
@@ -21,6 +20,7 @@ from drizzlepac import tweakreg
 from drizzlepac import tweakback
 from subprocess import call
 import tweakreg_sextract as tweaksex
+import pyfits as fits
 
 def drizzle(input_filename, cluster, filter, \
             combine_type='iminmed', \
@@ -90,6 +90,10 @@ def drizzle(input_filename, cluster, filter, \
     
     '''
 
+    if fits.__version__ != '3.1.6':
+        raise ImportError('Not the correct version of pyfits, needs 3.1.6')
+    if np.__version__ != '1.11.0':
+        raise ImportError('Not the correct version of numpy, needs 1.11.0')
 
 
     if files is None:

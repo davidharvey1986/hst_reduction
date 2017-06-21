@@ -54,25 +54,6 @@ OPTIONAL OUTPUTS:
 	   Named singles/${EXPOSURE_NAME}_drz_sci.fits
 	
 	
-NOTES :
-      DEPENDENCIES : This requires 
-      Pyfits 3.1.16
-      Numpy 1.11.0
-      if the user already has package dependent modules
-      they should set up an special virtualenv with these 
-      dependencies installed
-
-      pip install virtualenv
-      virtualenc data
-      cd data/bin
-      export PYTHONPATH=/path/to/virtualenv/lib/python2.7/site-packages:$PYTHONPATH
-      ./pip install pyfits==3.1.16
-      ./pip install numpy==1.11.0
-      ./pip install ipython
-
-      These should install the packages only for the folder
-      data
-
 	
       
 

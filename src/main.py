@@ -38,13 +38,12 @@ import drizzle as drizzle
 import numpy as np
 import glob as glob
 import os as os
-import ipdb as pdb
 import sys
 import argparse as ap
 import pyfits as fits
 
 
-def main( cluster, single=False, drizzle_kernel='square' ):
+def main( cluster, single=False, drizzle_kernel='square', idl=True ):
     '''
     The main function to do what is explained in docs/README
 
@@ -75,7 +74,7 @@ def main( cluster, single=False, drizzle_kernel='square' ):
         raise ValueError("HST_REDUCTION KEYWORD NOT FOUND IN ENVIRMENT VARIABLE PLEASE ADD")
     
     #1. Run the cte correction on the data
-    cte.cte_correct( )
+    cte.cte_correct( idl=idl )
 
     #2. Flat field the image with calacs
     run_calacs.run_calacs( )

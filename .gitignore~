@@ -1,1 +1,4 @@
-*.pyx
+*.pyc
+*~
+dist
+build

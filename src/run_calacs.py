@@ -22,7 +22,6 @@ calacing
 import os as os
 from acstools import calacs
 import glob as glob
-import ipdb as pdb
 import get_acs_reffiles as gar
 
 def run_calacs( FitsFiles='j*q_cte_raw.fits' ):

@@ -7,7 +7,7 @@ And then to download missing ones.
 
 import os as os
 import pyfits as py
-import ipdb as pdb
+
 
 def get_acs_reffiles( cte_file, ext='all',
                     acs_reffiles_location = 'ftp://ftp.stsci.edu/cdbs/jref/',
@@ -35,9 +35,9 @@ def get_acs_reffiles( cte_file, ext='all',
 
     '''
 
-
+    print 'Getting ACS referenes files for ',cte_file
     header = py.open( cte_file )[0].header
-
+    
     req_calibration_files = []
     for i in header.keys():
         if header[i] == True:

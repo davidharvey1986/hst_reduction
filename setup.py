@@ -21,7 +21,9 @@ INCDIRS=['.']
 packages = ['pyHST','asciidata']
 package_dir = {'pyHST':'./src',
                'asciidata':'./lib/asciidata'}
-package_data = {'pyRRG': ['tweak_sex/*','bin/*']}
+package_data = {'pyHST': ['tweak_sex/*','bin/*',\
+                              'stsci_patches/*',\
+                              'calacs/*']}
 
 
 setup   (       name            = "pyHST",
@@ -34,11 +36,6 @@ setup   (       name            = "pyHST",
                 package_dir     = package_dir,
                 package_data    = package_data,
                 url = 'https://github.com/davidharvey1986/pyRRG', # use the URL to the github repo
-                download_url = 'https://github.com/davidharvey1986/pyHST/archive/'+version+'.tar.gz',
-                install_requires=['pyfits==3.1.6',\
-                                      'numpy==1.11.0',
-                                      'stscipython'.\
-                                      'stsci.distutils'],                          
-        )
+                download_url = 'https://github.com/davidharvey1986/pyHST/archive/'+version+'.tar.gz'        )
 
 

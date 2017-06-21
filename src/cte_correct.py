@@ -24,15 +24,17 @@ def cte_correct( files='j*q_raw.fits', idl=True ):
                  note, that the diretory 'bin' here needs to be in the idl path
     DEPENDENCIES : ACS-CTE Correction Binary in the PATH
     '''
+    code_dir = '/'.join(os.path.abspath(__file__).split('/')[:-1])
     
     if idl:
-        idl_command = os.environ['HST_REDUCTION']+"/bin/cte_correct_vidl.sh"
+        idl_command = code_dir+"/bin/cte_correct_vidl.sh"
         
         for iRaw_File in glob.glob(files):
-            gar.get_acs_reffiles( iRaw_File, ext='bia', add_jref=False)
+           
             cte_file = iRaw_File[:-9]+"_cte.fits"
             out_file = iRaw_File[:-9]+"_cte_raw.fits"
             if not os.path.isfile( out_file ):
+                gar.get_acs_reffiles( iRaw_File, ext='bia', add_jref=False)
                 os.system( idl_command )
                 os.system( "mv "+cte_file+" "+out_file)
     else:

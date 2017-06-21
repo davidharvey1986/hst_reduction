@@ -88,7 +88,7 @@ echo 'source '${ROOT_DIR}'/shell.setup'
 echo -en "\033[36m"
 echo 'If you would like to go back to your normal shell please run'
 echo -en "\033[31m"
-echo 'source  '${ROOT_DIR}'shell.deactivate'
+echo 'source  '${ROOT_DIR}'/shell.deactivate'
 echo -en "\033[0m"
 echo 'export PATH='${ROOT_DIR}'/bin:'${ROOT_DIR}'/lib/python2.7/site-packages/pyHST-0.0.1-py2.7.egg/pyHST/calacs:$(getconf PATH)' > shell.setup
 echo 'source '${ROOT_DIR}'/bin/activate' >> shell.setup

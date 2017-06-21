@@ -154,7 +154,7 @@ def readIDCtab (tabname, chip=1, date=None, direction='forward',
         else:
             direct = 'forward'
         #DH: Added a patch to change this to filt2.strip
-        if filt1 == filter1.strip() and filt2.strip() == filter2.strip():
+        if filt1.strip() == filter1.strip() and filt2.strip() == filter2.strip():
             if direct == direction.strip():
                 if int(detchip) == int(chip) or int(detchip) == -999:
                     row = i

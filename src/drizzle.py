@@ -27,7 +27,8 @@ def drizzle(input_filename, cluster, filter, \
             wcs_update=True, individual=True, \
             single=False, outputfilename=None,
             jref_path='../', search_rad=1.0, thresh=1.0,
-            files=None, drizzle_kernel='square', pixel_scale=0.03):
+            files=None, drizzle_kernel='square', 
+            pixel_scale=0.03, wht_file='ERR'):
 
     '''
     PURPOSE : TO STACK TOGETHER IMAGES FROM DIFFERENT EPOCHS
@@ -157,7 +158,8 @@ def drizzle(input_filename, cluster, filter, \
                                 final_scale=pixel_scale, \
                                 final_pixfrac=0.8, \
                                 combine_type=combine_type, \
-                                final_kernel=drizzle_kernel)
+                                final_kernel=drizzle_kernel,\
+                                   final_wht_type='ERR')
                                 
     
 
@@ -250,6 +252,7 @@ def drizzle_fields( obsDates, fltList, cluster, filter, search_rad=1, thresh=1):
                                         final_scale=0.03, \
                                         final_pixfrac=0.8, \
                                         combine_type='iminmed')
+                                          )
                                         
             call(["cp",str(iDate)+"_drz_sci.fits","keep"])
     

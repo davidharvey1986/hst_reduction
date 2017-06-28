@@ -252,7 +252,7 @@ def drizzle_fields( obsDates, fltList, cluster, filter, search_rad=1, thresh=1):
                                         final_scale=0.03, \
                                         final_pixfrac=0.8, \
                                         combine_type='iminmed')
-                                          )
+                                          
                                         
             call(["cp",str(iDate)+"_drz_sci.fits","keep"])
     

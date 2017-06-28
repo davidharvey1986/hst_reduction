@@ -43,7 +43,8 @@ import argparse as ap
 import pyfits as fits
 
 
-def main( cluster, single=False, drizzle_kernel='square', idl=True ):
+def main( cluster, single=False, drizzle_kernel='square', idl=True,
+          pixel_scale=0.03):
     '''
     The main function to do what is explained in docs/README
 
@@ -96,6 +97,7 @@ def main( cluster, single=False, drizzle_kernel='square', idl=True ):
                          files=flts,
                          jref_path='./', single=single,
                          search_rad=1.0, thresh=1.0,
+                         pixel_scale=pixel_scale,
                          drizzle_kernel=drizzle_kernel)
 
 

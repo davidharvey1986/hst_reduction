@@ -168,7 +168,7 @@ def drizzle(input_filename, cluster, filter, \
                                 final_pixfrac=0.8, \
                                 combine_type=combine_type, \
                                 final_kernel=drizzle_kernel,\
-                                   final_wht_type='ERR')
+                                   final_wht_type=wht_file)
                                 
     
 

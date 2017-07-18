@@ -76,7 +76,16 @@ def drizzle(input_filename, cluster, filter, \
                              to align objects (keyword in TweakReg)
       - threshold : the threshold in signal to noise for sources when alligning exposures (keyword in TweakReg)
       - files : a python list of files to be drizzled together, if none it will use the input_filename
-
+      - pixel_scale : the final pixel scale of the drizzled image
+      - drizzle_kernel : the kernel used to combine the images:
+            'square' : standard default use with 0.03"/pixel
+            'lanczos3': reduces correlated noise use with 0.05"/pixel
+      - wht_file : tye of weight file to be output
+            'ERR' : Inverse variance
+            'EXP' : effective exposure time
+            
+    FOR MORE SEE 
+       http://documents.stsci.edu/hst/HST_overview/documents/DrizzlePac/ch43.html
       
     UPDATE : 15/01/2014 : NEW PIPELINE
              07/10/2014 : V2 : CHANGE FROM OBSERVATION DATE TO OBSERVATION RUN

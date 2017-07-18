@@ -44,23 +44,25 @@ import pyfits as fits
 
 
 def main( cluster, single=False, drizzle_kernel='square', idl=True,
-          pixel_scale=0.03):
+          pixel_scale=0.03, wht_file='ERR'):
     '''
     The main function to do what is explained in docs/README
 
     INPUT : CLUSTER : A STRING OF THE NAME OF THE CLUSTER THAT WILL BE PUT OUT
                       AT THE END
-
-    SINGLE : If True, a drizzled image of each exposure is produced.
+    KEYWORDS:
+        SINGLE : If True, a drizzled image of each exposure is produced.
              These are used for PSF estimation.
              WARNING: If you are drizzling together a lot of images
              this will produce a lot of data (Each drz image is ~300mb)
+        Following are drizzle options, see drizzle.py for more:
 
-    NOTE : PLEASE ENSURE YOU SET AN ENVIRONMENT VARIABLE IN YOU LOGIN
-         SCRIPT E.G. .BASH_LOGIN WITH THE VARIANBLE TO THIS DIRECTORY
+        DRIZZLE_KERNEL : The kernel used in the final drizzlign stage
+        PIXEL_SCALE : the final pixel scale of the drizzled image
+        WHT_FILE : the type of weight file wanted to output. 
+        
+        idl : If true use the idl version of the CTI corretion
 
-    e.g. for bash
-    export HST_REDUCTION = path/to/root_dir 
     '''
     sys.stdout = Logger("hst_reduction.log")
 
@@ -98,7 +100,8 @@ def main( cluster, single=False, drizzle_kernel='square', idl=True,
                          jref_path='./', single=single,
                          search_rad=1.0, thresh=1.0,
                          pixel_scale=pixel_scale,
-                         drizzle_kernel=drizzle_kernel)
+                         drizzle_kernel=drizzle_kernel,
+                         wht_file=wht_file)
 
 
 

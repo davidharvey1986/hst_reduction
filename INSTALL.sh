@@ -57,6 +57,7 @@ ROOT_DIR=${PWD}
 #Go in to the binaries and start installing
 cd ${ROOT_DIR}/bin
 unset PYTHONPATH
+export PATH='${ROOT_DIR}'/bin:'${ROOT_DIR}'/lib/python2.7/site-packages/pyHST-0.0.1-py2.7.egg/pyHST/calacs:$(getconf PATH)
 #ACtivate the virtual environment
 source activate
 #This should be nothing
@@ -91,6 +92,8 @@ echo -en "\033[31m"
 echo 'source  '${ROOT_DIR}'/shell.deactivate'
 echo -en "\033[0m"
 echo 'export PATH='${ROOT_DIR}'/bin:'${ROOT_DIR}'/lib/python2.7/site-packages/pyHST-0.0.1-py2.7.egg/pyHST/calacs:$(getconf PATH)' > shell.setup
+IDL_PATH=`ls -d ${ROOT_DIR}'/lib/python/site-packages/pyHST*/pyHST/bin/idl_cti_cor/`
+echo 'export IDL_PATH='${IDL_PATH} >> shell.setup
 echo 'source '${ROOT_DIR}'/bin/activate' >> shell.setup
 echo 'unset PYTHONPATH' >> shell.setup
 echo 'cd '${ROOT_DIR} >> shell.setup

@@ -21,8 +21,11 @@ packages = ['pyHST','asciidata']
 package_dir = {'pyHST':'./src',
                'asciidata':'./lib/asciidata',
                    'docs':'./docs'}
-package_data = {'pyHST': ['tweak_sex/*','bin/*',\
+    
+package_data = {'pyHST': ['tweak_sex/*',\
                               'stsci_patches/*',\
+                              'bin/idl_cti_cor/*', \
+                              'bin/*', \
                               'calacs/*',\
                               '../docs/*', \
                               '../INSTALL*']}

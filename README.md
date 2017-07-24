@@ -56,5 +56,8 @@ OPTIONAL OUTPUTS:
 	
 	
       
-
+NOTES :
+      Assumes use of idl, if gdl please change in the src/bin/cte_correct_vidl.sh and GDL_PATH instead of IDL_PATH
+      Assumes use of standard clang GCC installer
+      
        

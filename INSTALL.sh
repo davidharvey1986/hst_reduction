@@ -37,6 +37,7 @@
 
 #First we need virtualenv package
 #So lock in the PWD first
+idl_binary=`which idl`
 CODE_DIR=${PWD}
 virtual_env=${1}
 pip install virtualenv
@@ -97,5 +98,6 @@ echo 'export IDL_PATH='${IDL_PATH} >> shell.setup
 echo 'source '${ROOT_DIR}'/bin/activate' >> shell.setup
 echo 'unset PYTHONPATH' >> shell.setup
 echo 'cd '${ROOT_DIR} >> shell.setup
+echo "alias idl='"${idl_binary}"'" >> shell.setup
 echo 'deactivate' > shell.deactivate
 echo 'source ~/.bash_login' >> shell.deactivate

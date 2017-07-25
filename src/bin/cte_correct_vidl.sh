@@ -10,23 +10,22 @@
 #
 
 
-  export cluster_name=${1}
+  export filename=${1}
 
   
-  checkraw=`ls *_raw.fits | grep -v orig | wc -l`
+
 
   workDir=`pwd`
   
-  if [ $checkraw -gt 0 ]
-  then
-      #Need to move any _orig_raw.fits from the dir before
-      idl -e 'acs_correct_cte,DATA_DIR="'$workDir'"'
-      #Clean up after ones self
-      rm -fr *A.fits
-      rm -fr *B.fits
-      rm -fr *C.fits
-      rm -fr *D.fits
-  fi
+
+  #Need to move any _orig_raw.fits from the dir before
+  idl -e 'acs_correct_cte,"'${filename}'",DATA_DIR="'$workDir'"'
+  #Clean up after ones self
+  rm -fr *A.fits
+  rm -fr *B.fits
+  rm -fr *C.fits
+  rm -fr *D.fits
+
   
 
   

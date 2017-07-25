@@ -38,6 +38,7 @@
 #First we need virtualenv package
 #So lock in the PWD first
 idl_binary=`which idl`
+idl_binary_path=`dirname $idl_binary`
 CODE_DIR=${PWD}
 virtual_env=${1}
 pip install virtualenv
@@ -93,11 +94,11 @@ echo -en "\033[31m"
 echo 'source  '${ROOT_DIR}'/shell.deactivate'
 echo -en "\033[0m"
 echo 'export PATH='${ROOT_DIR}'/bin:'${ROOT_DIR}'/lib/python2.7/site-packages/pyHST-0.0.1-py2.7.egg/pyHST/calacs:$(getconf PATH)' > shell.setup
-IDL_PATH=`ls -d ${ROOT_DIR}'/lib/python/site-packages/pyHST*/pyHST/bin/idl_cti_cor/`
+IDL_PATH=`ls -d ${ROOT_DIR}/lib/python2.7/site-packages/pyHST*/pyHST/bin/idl_cti_cor/`
 echo 'export IDL_PATH='${IDL_PATH} >> shell.setup
 echo 'source '${ROOT_DIR}'/bin/activate' >> shell.setup
 echo 'unset PYTHONPATH' >> shell.setup
 echo 'cd '${ROOT_DIR} >> shell.setup
-echo "alias idl='"${idl_binary}"'" >> shell.setup
+echo 'export PATH=${PATH}:'${idl_binary_path} >> shell.setup
 echo 'deactivate' > shell.deactivate
 echo 'source ~/.bash_login' >> shell.deactivate

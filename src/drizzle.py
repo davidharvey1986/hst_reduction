@@ -25,7 +25,8 @@ import pyfits as fits
 def drizzle(input_filename, cluster, filter, \
             combine_type='iminmed', \
             wcs_update=True, individual=True, \
-            single=False, outputfilename=None,
+            single=False, single_only=False,
+            outputfilename=None,
             jref_path='../', search_rad=1.0, thresh=1.0,
             files=None, drizzle_kernel='square', 
             pixel_scale=0.03, wht_file='ERR'):
@@ -69,6 +70,7 @@ def drizzle(input_filename, cluster, filter, \
       - wcs_update : DO I WANT TO UPDATE THE WCS HEADERS? DEFAULT=True
       - individual : DO I WANT TO DRIZZLE EACH OBS RUN INDIVUALLY AND TWEAKBACK DEFAILT =True, \
       - single : DO I WANT TO DRIZZLE EACH IMAGE ONTO ITS ON FRAME FOR PURPOSE OF PSF EST DEF=False):
+      - single_only : ONCE DRIZZLING INIDIVIUDALLY, RETURN AND STOP
       - outputfilename : the string of the output file. If not given the name defauilts to
                          CLUSTER_FILTER_drz_sci.fits
       - jref_path : string, the location of the calibration files for distortion etc

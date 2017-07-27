@@ -4,10 +4,10 @@ catalogues that will be used in TweakReg in the alignment process
 
 '''
 import pysex as sex
-
+import os as os
 
 def tweakreg_sextract( files_to_sextract, catfile_name,
-                       sexfile_dir='/Users/DavidHarvey/Library/Code/Python/hst_reduction/lib/' ):
+                       sexfile_dir=None):
     '''
     Systematically loop through each file and sextract the sources
     and write them in a catalogue
@@ -20,6 +20,9 @@ def tweakreg_sextract( files_to_sextract, catfile_name,
     
     OUTPUT : A source catalogue for each 
     '''
+    if sexfile_dir is None:
+        sexfile_dir = '/'.join(os.path.abspath(__file__).\
+                                   split('/')[:-1])+'/tweak_sex/'
 
     catfile = open( catfile_name, "wb")
 

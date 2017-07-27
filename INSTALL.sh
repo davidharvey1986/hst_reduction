@@ -39,6 +39,8 @@
 #So lock in the PWD first
 idl_binary=`which idl`
 idl_binary_path=`dirname $idl_binary`
+sex_binary=`which sex`
+sex_binary_path=`dirname $sex_binary`
 CODE_DIR=${PWD}
 virtual_env=${1}
 pip install virtualenv
@@ -99,6 +101,6 @@ echo 'export IDL_PATH='${IDL_PATH} >> shell.setup
 echo 'source '${ROOT_DIR}'/bin/activate' >> shell.setup
 echo 'unset PYTHONPATH' >> shell.setup
 echo 'cd '${ROOT_DIR} >> shell.setup
-echo 'export PATH=${PATH}:'${idl_binary_path} >> shell.setup
+echo 'export PATH=${PATH}:'${idl_binary_path}:${sex_binary_path} >> shell.setup
 echo 'deactivate' > shell.deactivate
 echo 'source ~/.bash_login' >> shell.deactivate

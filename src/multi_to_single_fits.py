@@ -3,7 +3,7 @@ import sys
 import pyfits as pyfits
 import subprocess as sp
 
-def main( file_name_load, extension ):
+def main( file_name_load,launch_date=52334.5 ):
 
     arctic_dir = os.getcwd()+'/'
 
@@ -14,7 +14,8 @@ def main( file_name_load, extension ):
     data = hdulist['SCI', extension].data  # copy fits data to data array for loading
 
     new_hdr = pyfits.Header()
-    new_hdr['DATE'] = header['DATE-OBS']
+    new_hdr['DATE'] = header['EXPSTART'] - launch_date
+
     new_hdr['BUNIT'] = 'ELECTRONS'
 
     # Write the data on disk in a FITS file

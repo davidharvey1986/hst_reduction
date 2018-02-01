@@ -60,4 +60,10 @@ NOTES :
       Assumes use of idl, if gdl please change in the src/bin/cte_correct_vidl.sh and GDL_PATH instead of IDL_PATH
       Assumes use of standard clang GCC installer
       
-       
+TO DO:
+   Add sextractor path to the install script
+   Add MATPLOTLIBRC with a backend of TkAgg to the install script
+   Add target checker to make sure i drizzle the same object together
+   Add jref_path to all the scripts so i can point to the same cluster and not redownload all the same files
+   Add plt.ion ( i think this will solve the problem of not appearing plots)
+   Add the launch date on the run arctic.sh

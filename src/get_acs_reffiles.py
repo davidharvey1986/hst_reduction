@@ -47,14 +47,17 @@ def get_acs_reffiles( cte_file, ext='all',
             get_file_ext = get_file.split('_')[1][:3]
 
             if add_jref:
-                save_file = 'jref'+get_file
+                save_file = os.environ['jref']+'/jref'+get_file
             else:
-                save_file = get_file
+                save_file = os.environ['jref']+'/'+get_file
+
             if (ext == 'all') | (ext == get_file_ext):
                 if not os.path.isfile( save_file ):
                     if not os.path.isfile( get_file ) :
                         print("FETCHING %s\n" %get_file)
                         os.system("curl -O "+acs_reffiles_location+"/"+get_file)
+                        if not os.path.isfile(get_file):
+                            raise ValueError('Error in obtaining the reference file')
                         os.system("mv "+get_file+" "+save_file)
                     else:
                         if add_jref:

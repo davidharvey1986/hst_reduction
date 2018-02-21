@@ -41,10 +41,10 @@ import os as os
 import sys
 import argparse as ap
 import pyfits as fits
-
+import CheckTargName as CheckTargets
 
 def main( cluster, single=False, drizzle_kernel='square', idl=True,
-          pixel_scale=0.03, wht_file='ERR'):
+          pixel_scale=0.03, wht_file='ERR', jref_path='./'):
     '''
     The main function to do what is explained in docs/README
 
@@ -64,6 +64,8 @@ def main( cluster, single=False, drizzle_kernel='square', idl=True,
         idl : If true use the idl version of the CTI corretion
 
     '''
+    os.environ['jref'] = jref_path
+
     sys.stdout = Logger("hst_reduction.log")
 
     if fits.__version__ != '3.1.6':
@@ -76,6 +78,9 @@ def main( cluster, single=False, drizzle_kernel='square', idl=True,
     if 'HST_REDUCTION' not in os.environ.keys():
         raise ValueError("HST_REDUCTION KEYWORD NOT FOUND IN ENVIRMENT VARIABLE PLEASE ADD")
     
+    #ALso check that the taget names are all the same
+    CheckTargets.CheckTargName()
+
     #1. Run the cte correction on the data
     cte.cte_correct( idl=idl )
 
@@ -97,7 +102,7 @@ def main( cluster, single=False, drizzle_kernel='square', idl=True,
         flts = [ iFlt[0:13]+'_flt.fits' for iFlt in fileobj ]
         drizzle.drizzle( 'USING FILES', cluster, iFilter,
                          files=flts,
-                         jref_path='./', single=single,
+                         jref_path=jref_path, single=single,
                          search_rad=1.0, thresh=1.0,
                          pixel_scale=pixel_scale,
                          drizzle_kernel=drizzle_kernel,

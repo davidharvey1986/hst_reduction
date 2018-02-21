@@ -12,7 +12,6 @@ Purpose :
 	This code produces weak lensing, drizzled, quality data
 	from the original raw files.
 
-
 Method :
        1. The first part is corrects all the raw files for 
        Charge Transfer Inefficiency (CTE, https://arxiv.org/abs/1401.1151)

@@ -35,6 +35,9 @@ def cte_correct( files='j*q_raw.fits', idl=True ):
             out_file = iRaw_File[:-9]+"_cte_raw.fits"
             if not os.path.isfile( out_file ):
                 gar.get_acs_reffiles( iRaw_File, ext='bia', add_jref=False)
+                #The bias files cant be in the jref directory for the idl
+                if os.environ['jref'] != './':
+                    os.system('cp '+os.environ['jref']+'/*bia* .')
                 os.system( idl_command+' '+iRaw_File[:-9] )
                 os.system( "mv "+cte_file+" "+out_file)
     else:

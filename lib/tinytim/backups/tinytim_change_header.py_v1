@@ -1,0 +1,43 @@
+import pyfits as py
+import glob as glob
+import numpy as np
+import ipdb as pdb
+
+def tinytim_change_header( cluster ):
+
+    '''
+    Take a tinytim image and change the name to
+    the corresponding flt name and then add the
+    appropriate header
+    '''
+
+    rootDir = '/Users/DavidHarvey/Documents/Work/CLASH_PSF/'
+    dataDir = rootDir+'/clusters/'+cluster
+
+    filters = glob.glob(dataDir+'/*')
+    for iFilter in filters:
+        
+        images, focus = np.loadtxt(iFilter+'/FocusArray.txt', \
+                                dtype=('str'), unpack=True )
+
+
+        for iImage in xrange(len(images)):
+    
+            TinyTim_HDUs = py.open(iFilter+'/TinyTim/'+images[iImage]+'_TT_flt.fits')
+            FLT_HDUs = py.open(iFilter+'/'+images[iImage]+'_flt.fits')
+
+            for iHDU in xrange(len(TinyTim_HDUs)):
+
+                if (iHDU != 3) and (iHDU != 6):
+                    FLT_HDUs[ iHDU ].data = TinyTim_HDUs[iHDU].data
+
+                                
+            FLT_HDUs.writeto(iFilter+'/TinyTim/'+\
+                             images[iImage]+'_flt.fits', \
+                             clobber=True)
+
+
+                              
+
+                              
+    

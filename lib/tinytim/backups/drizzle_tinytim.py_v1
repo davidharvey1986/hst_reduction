@@ -1,0 +1,57 @@
+import drizzle as drizzle
+import tinytim_change_header as tt_flt
+import ipdb as pdb
+import glob as glob
+import numpy as np
+from subprocess import call
+
+def drizzle_tinytim( cluster, combine_type='iminmed' ):
+
+    tt_flt.tinytim_change_header( cluster )
+
+    rootDir = '/Users/DavidHarvey/Documents/Work/CLASH_PSF/'
+    dataDir = rootDir+'/clusters/'+cluster
+    filters = glob.glob(dataDir+'/*')
+
+    for iFilter in xrange(len(filters)):
+
+        filter_string = filters[iFilter].split("/")[-1]
+        print filter_string
+        TT_dir = filters[iFilter]+'/TinyTim'
+
+        #TWeak the fake flts back using those in the
+        #actual drizzle process
+        
+        #I dont need to tweak since i use the header information
+        #from the flt files.
+
+        
+        
+        input_str = TT_dir+'/j*q_flt.fits'
+
+
+        output = TT_dir+'/'+cluster+'_TT'
+        thresh=1.0
+        search_rad=1.0
+        
+        drizzle.tweakreg.TweakReg(input_str, \
+                            residplot='both', \
+                            see2dplot=True, \
+                            searchrad=1, \
+                            catfile='catfile', \
+                            xcol=1, ycol=2, fluxcol=3, \
+                            minobj=0, \
+                            refcat='reference.cat', \
+                            refxcol=1, refycol=2, rfluxcol=3) 
+
+        
+        drizzle.astrodrizzle.AstroDrizzle( input_str, \
+                                            output=output, \
+                                            final_scale=0.03, \
+                                            final_pixfrac=0.8, \
+                                            combine_type='iminmed', \
+                                            skysub=True, driz_separate=False, static=False, \
+                                            median=False, blot=False, driz_cr=False, \
+                                            final_refimage=filters[iFilter]+'/'+\
+                                            cluster+'_'+filter_string+'_drz_sci.fits')
+    

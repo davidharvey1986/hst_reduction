@@ -1,5 +1,7 @@
 INSTALL.sh
 INSTALL
+src/CheckTargName.py
+src/clean.py
 src/pysex.py
 src/__init__.py
 src/cte_correct.py

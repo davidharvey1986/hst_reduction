@@ -24,7 +24,7 @@ from acstools import calacs
 import glob as glob
 import get_acs_reffiles as gar
 
-def run_calacs( FitsFiles='j*q_cte_raw.fits' ):
+def run_calacs( FitsFiles='j*q_cte_raw.fits',jref_path='./' ):
     '''
     PURPOSE : This script will take in a bunch of CTE files
               and loop through each one, finding the required
@@ -45,7 +45,11 @@ def run_calacs( FitsFiles='j*q_cte_raw.fits' ):
 
     for iCTE_file in glob.glob(FitsFiles):
         #Get any missing reference files
-        gar.get_acs_reffiles( iCTE_file, ext='all' )
+        if os.environ['jref'] != './':
+            add_jref=False
+        else:
+            add_jref=True
+        gar.get_acs_reffiles( iCTE_file, ext='all',add_jref=add_jref)
         calacs_list.write( iCTE_file+'\n' )
         print("Running CALACS on %s" %
               iCTE_file )

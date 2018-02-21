@@ -77,6 +77,7 @@ which python
 ./pip install stscipython
 ./pip install pyfits==3.1.6
 ./pip install matplotlib
+./pip install PySide
 cd ${ROOT_DIR}
 mkdir pyHST
 #Get the code and install the pyHST
@@ -106,4 +107,6 @@ echo 'export PATH=${PATH}:'${idl_binary_path}:${sex_binary_path} >> shell.setup
 echo 'deactivate' > shell.deactivate
 echo 'source ~/.bash_login' >> shell.deactivate
 #Special for installing matplotlib
-echo "backend: TkAgg" >> ~/.matplotlib/matplotlibrc
+mkdir ${ROOT_DIR}/.matplotlib
+echo "backend: TkAgg" >> ${ROOT_DIR}/.matplotlib/matplotlibrc
+echo "MATPLOTLIBRC="${ROOT_DIR}"/.matplotlib" >> shell.setup

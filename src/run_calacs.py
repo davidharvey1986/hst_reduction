@@ -45,7 +45,7 @@ def run_calacs( FitsFiles='j*q_cte_raw.fits',jref_path='./' ):
 
     for iCTE_file in glob.glob(FitsFiles):
         #Get any missing reference files
-        if os.environ['jref'] != './':
+        if os.path.abspath(os.environ['jref']) == os.getcwd():
             add_jref=False
         else:
             add_jref=True

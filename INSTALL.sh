@@ -69,16 +69,27 @@ echo $PYTHONPATH
 #This should point towards the pip and python in the virtual environment
 which pip
 which python
+#Get updated version of pip
+
 #Install ALL packages as there are none here and the computer knows
 #nothing about glbal packages
-./pip install ipython
+./pip install ipython==5.8.0
 ./pip install numpy==1.11.0
+#packages that i need but for some reason dont like to be installed separately
+#stsci cant talk to these programs, so i wil just do them here.
+#TO DO ALL PACKAGES NEED VERSIONS!
+./pip install stsci_rtd_theme==0.2.4
+./pip install sphinx_rtd_theme
 ./pip install d2to1
+./pip install pytest-runner
+./pip install sphinx-automodapi
+./pip install numpydoc
+#####
+./pip install stwcs==1.3.2
 ./pip install stsci.distutils
 ./pip install stscipython
 ./pip install pyfits==3.1.6
 ./pip install matplotlib
-./pip install ipdb
 cd ${ROOT_DIR}
 mkdir pyHST
 #Get the code and install the pyHST
@@ -86,8 +97,8 @@ cp -fr ${CODE_DIR}/* pyHST
 cd pyHST
 python setup.py install
 cd ${ROOT_DIR}
-cp ${ROOT_DIR}/lib/python2.7/site-packages/pyHST-0.0.1-py2.7.egg/pyHST/stsci_patches/fileutil.py ${ROOT_DIR}/lib/python2.7/site-packages/stsci/tools/
-cp ${ROOT_DIR}/lib/python2.7/site-packages/pyHST-0.0.1-py2.7.egg/pyHST/stsci_patches/mutil.py ${ROOT_DIR}/lib/python2.7/site-packages/stwcs/distortion/mutil.py
+#cp ${ROOT_DIR}/lib/python2.7/site-packages/pyHST-0.0.1-py2.7.egg/pyHST/stsci_patches/fileutil.py ${ROOT_DIR}/lib/python2.7/site-packages/stsci/tools/
+#cp ${ROOT_DIR}/lib/python2.7/site-packages/pyHST-0.0.1-py2.7.egg/pyHST/stsci_patches/mutil.py ${ROOT_DIR}/lib/python2.7/site-packages/stwcs/distortion/mutil.py
 #Send out the notifications for the user to source the correct shell.
 echo -en "\033[36m"
 echo 'Please do the following to set up and go to the shell.'
@@ -100,6 +111,8 @@ echo 'source  '${ROOT_DIR}'/shell.deactivate'
 echo -en "\033[0m"
 echo 'export PATH='${ROOT_DIR}'/bin:'${ROOT_DIR}'/lib/python2.7/site-packages/pyHST-0.0.1-py2.7.egg/pyHST/calacs:$(getconf PATH)' > shell.setup
 IDL_PATH=`ls -d ${ROOT_DIR}/lib/python2.7/site-packages/pyHST*/pyHST/bin/idl_cti_cor/`
+echo "alias ipython=\"python -c 'import IPython; IPython.terminal.ipapp.launch_new_instance()'\"" >> shell.setup
+echo $alias >> shell.setup
 echo 'export IDL_PATH='${IDL_PATH} >> shell.setup
 echo 'source '${ROOT_DIR}'/bin/activate' >> shell.setup
 echo 'unset PYTHONPATH' >> shell.setup

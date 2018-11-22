@@ -43,6 +43,7 @@ def get_acs_reffiles( cte_file, ext='all',
         if header[i] == True:
             continue
         if 'jref' in str(header[i]):
+            
             get_file = str(header[i])[5:]
             get_file_ext = get_file.split('_')[1][:3]
 
@@ -50,6 +51,9 @@ def get_acs_reffiles( cte_file, ext='all',
                 save_file = os.environ['jref']+'/jref'+get_file
             else:
                 save_file = os.environ['jref']+'/'+get_file
+            #this new cte file is strange and has a problem with RN_CLIP
+            if get_file == '19i16323j_cte.fits':
+                get_file = 'xa81724cj_cte.fits'
 
             if (ext == 'all') | (ext == get_file_ext):
                 if not os.path.isfile( save_file ):

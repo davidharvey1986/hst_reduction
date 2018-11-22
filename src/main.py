@@ -92,10 +92,6 @@ def main( cluster, single=False, drizzle_kernel='square', idl=True,
 
     #4. Prepare for drizzling by moving some jref files back
     #   to original name
-    for iIDC in glob.glob('*idc*'):
-        os.system( "mv "+iIDC+' '+iIDC[4:])
-    for iD2I in glob.glob('*d2i*'):
-        os.system( "mv "+iD2I+' '+iD2I[4:])
         
     for iFilter in hst_filters:
         fileobj = open( iFilter+'.lis', 'rb')

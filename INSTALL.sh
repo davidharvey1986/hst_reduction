@@ -78,7 +78,7 @@ which python
 ./pip install stscipython
 ./pip install pyfits==3.1.6
 ./pip install matplotlib
-./pip install PySide
+./pip install ipdb
 cd ${ROOT_DIR}
 mkdir pyHST
 #Get the code and install the pyHST

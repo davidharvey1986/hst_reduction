@@ -1,5 +1,6 @@
 INSTALL.sh
 INSTALL
+dist/*
 src/CheckTargName.py
 src/clean.py
 src/pysex.py

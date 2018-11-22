@@ -73,6 +73,7 @@ which python
 #nothing about glbal packages
 ./pip install ipython
 ./pip install numpy==1.11.0
+./pip install d2to1
 ./pip install stsci.distutils
 ./pip install stscipython
 ./pip install pyfits==3.1.6

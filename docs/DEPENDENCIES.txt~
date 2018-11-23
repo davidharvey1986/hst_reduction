@@ -22,6 +22,7 @@ Contents:
 8.  ipdb (for bug fixing)
 9.  os
 10. sys
+11. asciidata
 
 2. External Dependencies
 ------------------------

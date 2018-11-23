@@ -9,12 +9,6 @@
 #  This could be updated in the future by space telescope however
 #  not just yet.
 #  
-#  Therefore notes are as follow:
-#  Requires
-#     - pyfits version 3.1.6
-#     - numpy version 1.11.0
-#     - a patch for stsci/tools/fileutil
-#     - a patch for stwcs/distortion/multil.py
 #
 #  This code here will
 #    1. Set up a virtual environment in which to install all the code. This
@@ -73,12 +67,12 @@ which python
 
 #Install ALL packages as there are none here and the computer knows
 #nothing about glbal packages
-./pip install ipython==5.8.0
-./pip install numpy==1.11.0
+./pip install ipython
+./pip install numpy
 #packages that i need but for some reason dont like to be installed separately
 #stsci cant talk to these programs, so i wil just do them here.
 #TO DO ALL PACKAGES NEED VERSIONS!
-./pip install stsci_rtd_theme==0.2.4
+./pip install stsci_rtd_theme
 ./pip install sphinx_rtd_theme
 ./pip install d2to1
 ./pip install pytest-runner
@@ -88,7 +82,7 @@ which python
 ./pip install stwcs==1.3.2
 ./pip install stsci.distutils
 ./pip install stscipython
-./pip install pyfits==3.1.6
+./pip install pyfits
 ./pip install matplotlib
 cd ${ROOT_DIR}
 mkdir pyHST
@@ -97,8 +91,6 @@ cp -fr ${CODE_DIR}/* pyHST
 cd pyHST
 python setup.py install
 cd ${ROOT_DIR}
-#cp ${ROOT_DIR}/lib/python2.7/site-packages/pyHST-0.0.1-py2.7.egg/pyHST/stsci_patches/fileutil.py ${ROOT_DIR}/lib/python2.7/site-packages/stsci/tools/
-#cp ${ROOT_DIR}/lib/python2.7/site-packages/pyHST-0.0.1-py2.7.egg/pyHST/stsci_patches/mutil.py ${ROOT_DIR}/lib/python2.7/site-packages/stwcs/distortion/mutil.py
 #Send out the notifications for the user to source the correct shell.
 echo -en "\033[36m"
 echo 'Please do the following to set up and go to the shell.'

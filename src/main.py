@@ -68,11 +68,6 @@ def main( cluster, single=False, drizzle_kernel='square', idl=True,
 
     sys.stdout = Logger("hst_reduction.log")
 
-    if fits.__version__ != '3.1.6':
-        raise ImportError('Not the correct version of pyfits, needs 3.1.6')
-    if np.__version__ != '1.11.0':
-        raise ImportError('Not the correct version of numpy, needs 1.11.0')
-
     #Test for the environment variable
 
     if 'HST_REDUCTION' not in os.environ.keys():

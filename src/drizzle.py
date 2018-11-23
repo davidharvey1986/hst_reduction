@@ -102,11 +102,6 @@ def drizzle(input_filename, cluster, filter, \
     
     '''
 
-    if fits.__version__ != '3.1.6':
-        raise ImportError('Not the correct version of pyfits, needs 3.1.6')
-    if np.__version__ != '1.11.0':
-        raise ImportError('Not the correct version of numpy, needs 1.11.0')
-
 
     if files is None:
         files = glob.glob( input_filename )

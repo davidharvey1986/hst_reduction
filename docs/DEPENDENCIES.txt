@@ -31,6 +31,7 @@ Contents:
 11. stwcs==1.3.2 (later versions cant handle any python < 3.5)
 12. stsci.distutils==0.3.7
 13. stscipython==2.15.1
+14. stsci.imagestats==1.4.2 #The newer version bugs on me in installation
 14.  csv==1.0
 15.  argparse==1.1
 16.  glob

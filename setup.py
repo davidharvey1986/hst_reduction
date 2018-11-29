@@ -12,7 +12,7 @@ This module uses the HST method to  reduce images from the Hubble Space Telescop
 #python setup.py register -r pypi
 #sudo python setup.py sdist upload -r pypi
 
-version='0.0.1'
+version='0.0.2'
          
     
 INCDIRS=['.']

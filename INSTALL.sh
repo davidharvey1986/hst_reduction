@@ -72,6 +72,8 @@ which python
 #packages that i need but for some reason dont like to be installed separately
 #stsci cant talk to these programs, so i wil just do them here.
 #TO DO ALL PACKAGES NEED VERSIONS!
+#The new release bugs on me, so using this for, to be checked in future
+./pip install stsci.imagestats==1.4.2
 ./pip install stsci_rtd_theme
 ./pip install sphinx_rtd_theme
 ./pip install d2to1

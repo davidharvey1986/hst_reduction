@@ -23,10 +23,6 @@ Installing is complicated!
 13. pip install pyfits==3.1.6
 14. pip install pyHST
 
-#Get the patches
-15. cp ${PWD}/lib/python2.7/site-packages/pyHST-0.0.1-py2.7.egg/pyHST/stsci_patches/fileutil.py ${PWD}lib/python2.7/site-packages/stsci/tools/
-16. cp ${PWD}/lib/python2.7/site-packages/pyHST-0.0.1-py2.7.egg/pyHST/stsci_patches/mutil.py ${PWD}/lib/python2.7/site-packages/stwcs/distortion/mutil.py
-
 #Set path to find calacs
 #Go to the root directory of the virtual environment
 8. export PATH=${PWD}/bin:${PWD}/lib/python2.7/site-packages/pyHST-0.0.1-py2.7.egg/pyHST/calacs:$(getconf PATH)

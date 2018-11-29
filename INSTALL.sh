@@ -126,4 +126,4 @@ echo 'source ~/.bash_login' >> shell.deactivate
 mkdir ${ROOT_DIR}/.matplotlib
 echo "backend: TkAgg" >> ${ROOT_DIR}/.matplotlib/matplotlibrc
 echo "MATPLOTLIBRC="${ROOT_DIR}"/.matplotlib" >> shell.setup
-echo "export PYTHONPATH="${ROOT_DIR}"/lib/python2.7/site-packages/pyHST-"${version}"-py2.7.egg/pyHST"
+echo "export PYTHONPATH="${ROOT_DIR}"/lib/python2.7/site-packages/pyHST-"${version}"-py2.7.egg/pyHST" >> shell.setup

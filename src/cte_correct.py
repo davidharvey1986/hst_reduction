@@ -42,7 +42,6 @@ def cte_correct( files='j*q_raw.fits', idl=True ):
                 os.system( "mv "+cte_file+" "+out_file)
     else:
         for iRaw_File in glob.glob(files):
-            gar.get_acs_reffiles( iRaw_File, ext='bia' )
             out_file = iRaw_File[:-9]+"_cte_raw.fits"
             if not os.path.isfile( out_file ):
                 #Arctic cannot run multi-extension fits yet

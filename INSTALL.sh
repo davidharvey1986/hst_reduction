@@ -39,7 +39,6 @@ then
     echo "Version in setup.py ("$DistVersion") does not match the version in this script('"$version"'). Please change the version in INSTALL.sh to the one given in setup.py"
     exit
 fi
-exit
 idl_binary=`which idl`
 idl_binary_path=`dirname $idl_binary`
 sex_binary=`which sex`

@@ -24,7 +24,7 @@ from acstools import calacs
 import glob as glob
 import get_acs_reffiles as gar
 
-def run_calacs( FitsFiles='j*q_cte_raw.fits',jref_path='./' ):
+def run_calacs( FitsFiles='j*_cte_raw.fits',jref_path='./' ):
     '''
     PURPOSE : This script will take in a bunch of CTE files
               and loop through each one, finding the required

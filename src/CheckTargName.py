@@ -10,7 +10,7 @@ def CheckTargName( sort=False):
     target. 
 
     '''
-    RawFitsFiles = np.array(glob.glob('j*q_raw.fits'))
+    RawFitsFiles = np.array(glob.glob('j*_raw.fits'))
 
     TargNames = []
     

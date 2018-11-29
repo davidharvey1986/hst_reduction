@@ -41,10 +41,7 @@ def cte_correct( files='j*q_raw.fits', idl=True ):
                 os.system( idl_command+' '+iRaw_File[:-9] )
                 os.system( "mv "+cte_file+" "+out_file)
     else:
-        command = "arctic.sh"
-        print files
         for iRaw_File in glob.glob(files):
-            print files
             gar.get_acs_reffiles( iRaw_File, ext='bia' )
             out_file = iRaw_File[:-9]+"_cte_raw.fits"
             if not os.path.isfile( out_file ):

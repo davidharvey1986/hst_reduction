@@ -103,7 +103,7 @@ echo 'If you would like to go back to your normal shell please run'
 echo -en "\033[31m"
 echo 'source  '${ROOT_DIR}'/shell.deactivate'
 echo -en "\033[0m"
-echo 'export PATH='${ROOT_DIR}'/bin:'${ROOT_DIR}'/lib/python2.7/site-packages/pyHST-0.0.1-py2.7.egg/pyHST/calacs:$(getconf PATH)' > shell.setup
+echo 'export PATH='${ROOT_DIR}'/bin:'${ROOT_DIR}'/lib/python2.7/site-packages/pyHST-0.0.1-py2.7.egg/pyHST/calacs:$(getconf PATH):'${ROOT_DIR}'/lib/python2.7/site-packages/pyHST-0.0.1-py2.7.egg/pyHST/bin/'  > shell.setup
 IDL_PATH=`ls -d ${ROOT_DIR}/lib/python2.7/site-packages/pyHST*/pyHST/bin/idl_cti_cor/`
 echo "alias ipython=\"python -c 'import IPython; IPython.terminal.ipapp.launch_new_instance()'\"" >> shell.setup
 echo $alias >> shell.setup
@@ -118,3 +118,4 @@ echo 'source ~/.bash_login' >> shell.deactivate
 mkdir ${ROOT_DIR}/.matplotlib
 echo "backend: TkAgg" >> ${ROOT_DIR}/.matplotlib/matplotlibrc
 echo "MATPLOTLIBRC="${ROOT_DIR}"/.matplotlib" >> shell.setup
+echo "export PYTHONPATH="${ROOT_DIR}"/lib/python2.7/site-packages/pyHST-0.0.1-py2.7.egg/pyHST"

@@ -31,14 +31,9 @@
 
 #First we need virtualenv package
 #So lock in the PWD first
-version='0.0.2'
-DistVersion=`grep version= setup.py | cut -d = -f2`
-    #Check the version here matches the version in setup.y
-if [ "$DistVersion" != "'$version'" ]
-then
-    echo "Version in setup.py ("$DistVersion") does not match the version in this script('"$version"'). Please change the version in INSTALL.sh to the one given in setup.py"
-    exit
-fi
+
+version=`grep version= setup.py | cut -d = -f2`
+echo 'INSTALLING pyHST VERSION '${version}
 idl_binary=`which idl`
 idl_binary_path=`dirname $idl_binary`
 sex_binary=`which sex`

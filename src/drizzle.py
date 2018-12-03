@@ -287,7 +287,7 @@ def drizzle_fields( obsDates, fltList, cluster, filter, search_rad=1, thresh=1):
     
 
     #Run sextractor on the images
-    #tweaksex.tweakreg_sextract(drzList,'catfile')
+    tweaksex.tweakreg_sextract(drzList,'catfile')
     refDate=obsDates[1]#
     refimage=drzList[1]#
     drzString= ",".join(drzList)

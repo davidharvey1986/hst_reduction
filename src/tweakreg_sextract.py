@@ -23,7 +23,7 @@ def tweakreg_sextract( files_to_sextract, catfile_name,
     if sexfile_dir is None:
         sexfile_dir = '/'.join(os.path.abspath(__file__).\
                                    split('/')[:-1])+'/tweak_sex/'
-
+                                   
     catfile = open( catfile_name, "wb")
 
     for iFile in files_to_sextract:
@@ -44,14 +44,18 @@ def tweakreg_sextract( files_to_sextract, catfile_name,
 
 
         
-def ref_sex( refimage,
-            sexfile_dir='/Users/DavidHarvey/Library/Code/Python/hst_reduction/lib/' ):
+def ref_sex( refimage, sexfile_dir=None):
     
     '''
     PURPOSE : TO SEXTRACT THE COORDINATES OF THE OBJECTS IN
               FOR THE REFERENCE CATALOGUE
 
+
     '''
+    if sexfile_dir is None:
+        sexfile_dir = '/'.join(os.path.abspath(__file__).\
+                                   split('/')[:-1])+'/tweak_sex/'
+                                   
     conf_file = sexfile_dir+'tweak_wcs.sex'
     filter_name = sexfile_dir+'gauss_5.0_9x9.conv'
     starnnw_name = sexfile_dir+'default.nnw'

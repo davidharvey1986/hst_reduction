@@ -1,6 +1,7 @@
 INSTALL.sh
 INSTALL
 dist/*
+src/CheckExposureTime.py
 src/CheckTargName.py
 src/clean.py
 src/pysex.py

@@ -2,7 +2,6 @@ import pyfits as fits
 import glob as glob
 import numpy as np
 import os as os
-
 def CheckTargName( sort=False):
     '''
     This script is to check that all the raw
@@ -10,6 +9,8 @@ def CheckTargName( sort=False):
     target. 
 
     '''
+    
+    
     RawFitsFiles = np.array(glob.glob('j*_raw.fits'))
 
     TargNames = []

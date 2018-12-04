@@ -42,6 +42,7 @@ import sys
 import argparse as ap
 import pyfits as fits
 import CheckTargName as CheckTargets
+import CheckExposureTime as CheckExposureTime
 
 def main( cluster, single=False, drizzle_kernel='square', idl=True,
           pixel_scale=0.03, wht_file='ERR', jref_path='./',\
@@ -77,7 +78,9 @@ def main( cluster, single=False, drizzle_kernel='square', idl=True,
     
     #ALso check that the taget names are all the same
     CheckTargets.CheckTargName()
-
+    #and that the exposure time > 0
+    CheckExposureTime.CheckExposureTime()
+    
     #1. Run the cte correction on the data
     cte.cte_correct( idl=idl )
 

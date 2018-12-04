@@ -60,9 +60,6 @@ NOTES :
       Assumes use of standard clang GCC installer
       
 TO DO:
-   Add sextractor path to the install script
-   Add MATPLOTLIBRC with a backend of TkAgg to the install script
-   Add target checker to make sure i drizzle the same object together
    Add jref_path to all the scripts so i can point to the same cluster and not redownload all the same files
-   Add plt.ion ( i think this will solve the problem of not appearing plots)
-   Add the launch date on the run arctic.sh
+   Plots still do not show during the script, and only when it ends. I have tried different backends, but these do not work. Still to be finished.
+   

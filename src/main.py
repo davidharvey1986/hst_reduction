@@ -44,7 +44,8 @@ import pyfits as fits
 import CheckTargName as CheckTargets
 
 def main( cluster, single=False, drizzle_kernel='square', idl=True,
-          pixel_scale=0.03, wht_file='ERR', jref_path='./'):
+          pixel_scale=0.03, wht_file='ERR', jref_path='./',\
+              search_rad=1., thresh=1.):
     '''
     The main function to do what is explained in docs/README
 
@@ -60,8 +61,9 @@ def main( cluster, single=False, drizzle_kernel='square', idl=True,
         DRIZZLE_KERNEL : The kernel used in the final drizzlign stage
         PIXEL_SCALE : the final pixel scale of the drizzled image
         WHT_FILE : the type of weight file wanted to output. 
-        
-        idl : If true use the idl version of the CTI corretion
+        IDL : If true use the idl version of the CTI corretion
+        SEARCH_RAD: the search radius for when aligning images, can be either a float of an array. If array must be the same length as the number of filters
+        THRESH: S/N thresh for sources to be used to align imagescan be either afloat of an array. If array must be the same length as the number of filters
 
     '''
     os.environ['jref'] = jref_path
@@ -88,13 +90,21 @@ def main( cluster, single=False, drizzle_kernel='square', idl=True,
     #4. Prepare for drizzling by moving some jref files back
     #   to original name
         
-    for iFilter in hst_filters:
+    if type(search_rad) == float:
+        search_rad = np.zeros(len(hst_filters))+search_rad
+
+    if type(thresh) == float:
+        thresh = np.zeros(len(hst_filters))+thresh
+
+
+    for iCount, iFilter in enumerate(hst_filters):
+        
         fileobj = open( iFilter+'.lis', 'rb')
         flts = [ iFlt[0:13]+'_flt.fits' for iFlt in fileobj ]
         drizzle.drizzle( 'USING FILES', cluster, iFilter,
                          files=flts,
                          jref_path=jref_path, single=single,
-                         search_rad=1.0, thresh=1.0,
+                         search_rad=search_rad, thresh=thresh,
                          pixel_scale=pixel_scale,
                          drizzle_kernel=drizzle_kernel,
                          wht_file=wht_file)

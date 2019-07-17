@@ -41,7 +41,14 @@ def CheckTargName( sort=False):
                     
                     os.system('mv '+ExpID+'* '+iTargName)
             
-        
-        raise ValueError('Not all exposures have the same target')    
+
+            raise ValueError('Not all exposures have the same target')    
+        else:
+            sort = raw_input("Continue anyway? ('y' or 'n')")
+            if sort == 'y':
+                return
+            else:
+                raise ValueError('Not all exposures have the same target')    
+    
     
     

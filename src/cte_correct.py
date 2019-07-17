@@ -12,7 +12,7 @@ import glob as glob
 import get_acs_reffiles as gar
 import multi_to_single_fits as mts
 import run_arctic as rc
-def cte_correct( files='j*_raw.fits', idl=True ):
+def cte_correct( files='j*q_raw.fits', idl=True ):
     '''
     This code will loop through each file and correct the cte
     for each image

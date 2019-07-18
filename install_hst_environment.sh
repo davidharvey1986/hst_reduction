@@ -38,7 +38,8 @@ idl_binary=`which idl`
 idl_binary_path=`dirname $idl_binary`
 sex_binary=`which sex`
 sex_binary_path=`dirname $sex_binary`
-CODE_DIR=${PWD}
+BINARY_DIR=`which install_hst_environment.sh`
+CODE_DIR=`dirname $BINARY_DIR`
 virtual_env=${1}
 pip install virtualenv
 #You cant create a virtual environment of a package that already exists

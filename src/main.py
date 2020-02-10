@@ -44,7 +44,7 @@ import pyfits as fits
 import CheckTargName as CheckTargets
 import CheckExposureTime as CheckExposureTime
 
-def main( cluster, single=False, drizzle_kernel='square', idl=True,
+def main( cluster, single=False, drizzle_kernel='square', idl=False,
           pixel_scale=0.03, wht_file='ERR', jref_path='./',\
               search_rad=1., thresh=1.):
     '''

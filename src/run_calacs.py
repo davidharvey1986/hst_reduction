@@ -49,7 +49,7 @@ def run_calacs( FitsFiles='j*_cte_raw.fits',jref_path='./' ):
             add_jref=False
         else:
             add_jref=True
-        gar.get_acs_reffiles( iCTE_file, ext='all',add_jref=add_jref)
+        #gar.get_acs_reffiles( iCTE_file, ext='all',add_jref=add_jref)
         calacs_list.write( iCTE_file+'\n' )
         print("Running CALACS on %s" %
               iCTE_file )

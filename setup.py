@@ -28,7 +28,8 @@ package_data = {'pyHST': ['tweak_sex/*',\
                               'bin/*', \
                               'calacs/*',\
                               '../docs/*', \
-                              '../INSTALL*']}
+                              '../INSTALL*',\
+                              '../install*']}
 
 
 setup   (       name            = "pyHST",

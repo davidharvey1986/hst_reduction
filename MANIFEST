@@ -1,6 +1,7 @@
-INSTALL.sh
-INSTALL
+./INSTALL.sh
+./INSTALL
 dist/*
+./install_hst_environment.sh
 src/CheckExposureTime.py
 src/CheckTargName.py
 src/clean.py

@@ -31,15 +31,17 @@
 
 #First we need virtualenv package
 #So lock in the PWD first
+BINARY_DIR=`which install_hst_environment.sh`
+CODE_DIR=`dirname $BINARY_DIR`
 
-version=`grep version= setup.py | cut -d = -f2`
+version=`grep version= ${CODE_DIR}/setup.py | cut -d = -f2`
 echo 'INSTALLING pyHST VERSION '${version}
+
 idl_binary=`which idl`
 idl_binary_path=`dirname $idl_binary`
 sex_binary=`which sex`
 sex_binary_path=`dirname $sex_binary`
-BINARY_DIR=`which install_hst_environment.sh`
-CODE_DIR=`dirname $BINARY_DIR`
+
 virtual_env=${1}
 pip install virtualenv
 #You cant create a virtual environment of a package that already exists
@@ -84,6 +86,7 @@ which python
 ./pip install pytest-runner
 ./pip install sphinx-automodapi
 ./pip install numpydoc
+./pip install spherical_geometry==1.2.5
 #####
 ./pip install stwcs==1.3.2
 ./pip install stsci.distutils
